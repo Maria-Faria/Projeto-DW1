@@ -7,6 +7,7 @@ body {
     background: url('../img/background.jpg');
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     display: flex;
+    flex-direction: column;
 }
 
 header {
@@ -64,7 +65,7 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 15% 0 0 0;
+    margin: 13% 0 0 0;
 }
 
 main .obi-wan-gif {
@@ -78,4 +79,15 @@ main .obi-wan-gif {
 main .obi-wan-gif > img {
     width: 100%;
     height: 100%;
+}
+
+footer {
+    width: 100%;
+    height: 120px;
+    background: #696969;
+    display: flex;
+    font-weight: 600;
+    align-items: center;
+    justify-content: center;
+    margin: 5% 0 0 0;
 }
