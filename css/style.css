@@ -6,6 +6,7 @@
 body {
     background: url('../img/background.jpg');
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
 }
 
 header {
@@ -35,7 +36,7 @@ header > img {
 }
 
 header nav {
-    margin: 0 5% 0 0;
+    margin: 0 3% 0 0;
 }
 header nav ul {
     list-style: none;
@@ -55,4 +56,26 @@ header nav ul li > a{
 header nav ul li > a:hover {
     color: black;
     font-weight: 700;
+}
+
+main {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 15% 0 0 0;
+}
+
+main .obi-wan-gif {
+    background: white;
+    width: 550px;
+    height: 400px;
+    padding: 20px;
+    border-radius: 2%;
+}
+
+main .obi-wan-gif > img {
+    width: 100%;
+    height: 100%;
 }
