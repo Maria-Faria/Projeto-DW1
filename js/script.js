@@ -16,7 +16,7 @@ async function loadCards() {
 
         people.push({
             name: result.name,
-            photo: `./img/people-images/${i}.jpg`
+            photo: `../img/people-images/${i}.jpg`
         });
     }
 
