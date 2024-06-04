@@ -39,6 +39,7 @@ header > img {
 header nav {
     margin: 0 3% 0 0;
 }
+
 header nav ul {
     list-style: none;
     display: flex;
@@ -90,4 +91,62 @@ footer {
     align-items: center;
     justify-content: center;
     margin: 5% 0 0 0;
+}
+
+nav ul li > a.active {
+    color: black;
+    font-weight: 700;
+}
+
+.cards {
+    display: flex;
+    width: 90%;
+    min-height: calc(100vh - 285px);
+    flex-wrap: wrap;
+    gap: 35px;
+    padding: 0 0 0 30px;
+}
+
+.card {
+    height: 400px;
+    width: 300px;
+    background: white;
+    border-radius: 20px;
+    margin: 0 0 10px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.card > img {
+    width: 70%;
+    height: 70%;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.card > p {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.cards #loading {
+    align-self: center;
+    width: 50%;
+    height: 50%;
+    background: white;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 25%;
+}
+
+@media (height > 900px) {
+    footer {
+        height: 145px;
+        margin: 10% 0 0 0;
+    }
 }
