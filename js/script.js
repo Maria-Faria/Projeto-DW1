@@ -12,7 +12,7 @@ async function loadCards() {
 
     for(let i = 1; i <= 10; i++) {
         const response = await fetch(`https://swapi.dev/api/people/${i}`);
-        const result = await response.json();
+        const result = await response.json()
 
         people.push({
             name: result.name,
