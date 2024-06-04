@@ -6,7 +6,7 @@ async function loadCards() {
 
     divCards.innerHTML += `
         <div id="loading">
-            <img src='../img/loading.gif'>
+            <img src='./img/loading.gif'>
         </div>
     `
 
