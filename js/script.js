@@ -6,7 +6,7 @@ async function loadCards() {
 
     divCards.innerHTML += `
         <div id="loading">
-            <img src='./img/loading.gif'>
+            <img src='img/loading.gif'>
         </div>
     `
 
@@ -16,7 +16,7 @@ async function loadCards() {
 
         people.push({
             name: result.name,
-            photo: `../img/people-images/${i}.jpg`
+            photo: `img/people-images/${i}.jpg`
         });
     }
 
