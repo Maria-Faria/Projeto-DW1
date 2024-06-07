@@ -39,6 +39,7 @@ header > img {
 header nav {
     margin: 0 3% 0 0;
 }
+
 header nav ul {
     list-style: none;
     display: flex;
