@@ -34,6 +34,7 @@ header .logo > img {
 header > img {
     width: 70px;
     height: 70px;
+    margin: 0 0 0 7%;
 }
 
 header nav {
@@ -103,7 +104,7 @@ nav ul li > a.active {
     width: 90%;
     min-height: calc(100vh - 285px);
     flex-wrap: wrap;
-    gap: 35px;
+    gap: 42px;
     padding: 0 0 0 30px;
 }
 
@@ -142,6 +143,60 @@ nav ul li > a.active {
     justify-content: center;
     align-items: center;
     margin-left: 25%;
+}
+
+.modal {
+    position: absolute;
+    background: #0000007c;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    display: none;
+    justify-content: center;
+    align-items: start;
+    height: 142.1%;
+}
+
+.modal > main {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    width: 50%;
+    height: 50%;
+    background: white;
+    border-radius: 20px;
+    margin: 10% 0 0 0;
+    padding: 20px;
+}
+
+.cardInfo {
+    width: 100%;
+    height: 90%;
+    display: flex;
+    margin-top: 30px;
+    justify-content: flex-start;
+}
+
+.cardInfo > img {
+    width: 23%;
+    height: 45%;
+    border-radius: 10px;
+}
+
+.cardInfo > .item-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.cardInfo > .item-info > p {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 15px 0 30px 15px;
+}
+
+.item-info > p.infoPerson {
+    font-size: 17px; 
 }
 
 @media (height > 900px) {
