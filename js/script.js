@@ -33,10 +33,7 @@ async function loadCardsPeople() {
         });
     }
 
-    people.map(person => {
-        addCard(person, 'people');
-    })
-
+    people.map((person) => addCard(person, 'people'));
 }
 
 async function loadCardsSpecies() {
@@ -49,12 +46,16 @@ async function loadCardsSpecies() {
         species.push({
             id: i,
             name: result.name,
-            photo: `img/species-images/${i}.jpg`
+            photo: `img/species-images/${i}.jpg`,
+            classification: result.classification,
+            designation: result.designation,
+            eye_colors: result.eye_colors,
+            average_height: result.average_height,
+            films: result.films
         })
     }
 
-    species.map((specie) => addCard(specie));
-
+    species.map((specie) => addCard(specie, 'species'));
 }
 
 async function addCard(item, contentList) {
@@ -71,6 +72,8 @@ async function addCard(item, contentList) {
 }
 
 function openInfoCard(contentList, id) {
+    console.log(contentList)
+
     const modal = document.querySelector(".modal");
     modal.style.display = 'flex';
 
@@ -80,22 +83,45 @@ function openInfoCard(contentList, id) {
     cardMovies.innerHTML = '';
 
     contentList.map(item => {
+        console.log(item)
         
         if(id === item.id) {
+            item.birth_year !== undefined ?
+                cardInfo.innerHTML = `
+                    <img src = ${item.photo}>
+
+                    <div class = "item-info">
+                        <p>${item.name}</p> 
+
+                        <p class = "infoItem">Birth Year: ${item.birth_year} <br><br>
+                        Hair Color: ${item.hair_color} <br><br>
+                        Height: ${item.height}cm <br><br>
+                        Eye Color: ${item.eye_color} <br><br>
+                        </p>   
+                    </div>
+
+                    <div class = "buttons">
+                        <button style="background-color: green;">Save updates</button>
+                        <button style="background-color: red;">Delete card</button>
+                    </div>
+                `
+
+            :
+
             cardInfo.innerHTML = `
                 <img src = ${item.photo}>
 
                 <div class = "item-info">
                     <p>${item.name}</p> 
 
-                    <p class = "infoPerson">Birth Year: ${item.birth_year} <br><br>
-                    Hair Color: ${item.hair_color} <br><br>
-                    Height: ${item.height}cm <br><br>
-                    Eye Color: ${item.eye_color} <br><br>
+                    <p class = "infoItem">Classification: ${item.classification} <br><br>
+                    Designation: ${item.designation} <br><br>
+                    Average Height: ${item.average_height}cm <br><br>
+                    Eye Colors: ${item.eye_colors} <br><br>
                     </p>   
                 </div>
 
-                <div class = "buttons">
+                <div class = "buttons" style = "align-self: center;">
                     <button style="background-color: green;">Save updates</button>
                     <button style="background-color: red;">Delete card</button>
                 </div>
@@ -103,14 +129,14 @@ function openInfoCard(contentList, id) {
 
             item.films.map(async film => {
                 const response = await fetch(film);
-                const moviePerson = await response.json();
+                const movieItem = await response.json();
             
-                const imgMovie = `img/movies/${moviePerson.episode_id}.jpg`
+                const imgMovie = `img/movies/${movieItem.episode_id}.jpg`
 
                 cardMovies.innerHTML += `
                     <div class = "movie-info">
                         <img src = ${imgMovie}>
-                        <p>${moviePerson.title}</p>
+                        <p>${movieItem.title}</p>
                     </div>
                 `
             })
