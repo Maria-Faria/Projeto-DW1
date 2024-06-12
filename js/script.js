@@ -1,5 +1,6 @@
 const people = [];
 const species = [];
+
 let content = '';
 let moviesContent = '';
 let movies = [];
@@ -12,6 +13,17 @@ const pageLoading = () => {
             <img src='img/loading.gif'>
         </div>
     `;
+}
+
+const addNewCardContent = (contentList) => {
+    const divCards = document.querySelector(".cards");
+    
+    content += `
+        <div class = "card" onclick="openCreateNewCard(${contentList})">
+            <img src="img/add.png" style="width: 100px; height: 100px;">
+        </div>
+    `
+    divCards.innerHTML = content;
 }
 
 async function loadCardsPeople() {
@@ -34,6 +46,7 @@ async function loadCardsPeople() {
     }
 
     people.map((person) => addCard(person, 'people'));
+    addNewCardContent('people');
 }
 
 async function loadCardsSpecies() {
@@ -56,11 +69,11 @@ async function loadCardsSpecies() {
     }
 
     species.map((specie) => addCard(specie, 'species'));
+    addNewCardContent('species');
 }
 
 async function addCard(item, contentList) {
     const {id, name, photo} = item;
-    const divCards = document.querySelector(".cards");
 
     content += `
         <div class = "card" onclick="openInfoCard(${contentList}, ${id})">
@@ -68,14 +81,28 @@ async function addCard(item, contentList) {
             <p>${name}</p>
         </div>
     `
-    divCards.innerHTML = content;
 }
 
 function openInfoCard(contentList, id) {
-    console.log(contentList)
-
     const modal = document.querySelector(".modal");
     modal.style.display = 'flex';
+
+    modal.innerHTML = `
+        <main class="modal-content">
+            <img src="img/close.png" style="width: 20px; height: 20px; cursor: pointer;" onclick="closeInfoCard()">
+
+            <div class="cardInfo"> 
+
+            </div>
+
+            <h2 style="align-self: center; margin-bottom: 25px;">Movies</h2>
+                
+            <div class="cardMovies">
+
+            </div>
+                    
+        </main>
+    `
 
     const cardInfo = document.querySelector(".cardInfo");
     let cardMovies = document.querySelector(".cardMovies");
@@ -133,7 +160,7 @@ function openInfoCard(contentList, id) {
             
                 const imgMovie = `img/movies/${movieItem.episode_id}.jpg`
 
-                cardMovies.innerHTML += `
+                cardMovies.innerHTML += `                    
                     <div class = "movie-info">
                         <img src = ${imgMovie}>
                         <p>${movieItem.title}</p>
@@ -144,6 +171,105 @@ function openInfoCard(contentList, id) {
         }
     })
     
+}
+
+function openCreateNewCard(contentList) {
+    let isPeople = false;
+
+    contentList.map((item) => {
+        item.birth_year !== undefined ? isPeople = true : isPeople = false;
+    })
+
+    const modal = document.querySelector(".modal");
+    modal.style.display = 'flex';
+
+    modal.innerHTML = `
+        <main class="modal-content">
+            <img src="img/close.png" style="width: 20px; height: 20px; cursor: pointer;" onclick="closeInfoCard()">
+
+            <div class="newCard">
+                <h2>Create new card</h2>
+            </div>
+        </main>
+    `
+
+    const newCard = document.querySelector(".newCard");
+
+    if(isPeople) {
+        newCard.innerHTML += `
+            <form>
+                <div id="input-text">
+                    <div>
+                        <label for="name">Name: </label>
+                        <input type="text" placeholder="ex: Han Solo" id="name">
+                    </div>
+
+                    <div>
+                        <label for="photo">Photo: </label>
+                        <input type="text" placeholder="type the photo url" id="photo">
+                    </div>
+
+                    <div>
+                        <label for="birth_year">Birth Year: </label>
+                        <input type="text" placeholder="ex: 19BBY" id="birth_year">
+                    </div>
+
+                    <div>
+                        <label for="hair_color">Hair color: </label>
+                        <input type="text" placeholder="ex: black" id="hair_color">
+                    </div>
+
+                    <div>
+                        <label for="heigth">Heigth: </label>
+                        <input type="text" placeholder="ex: 180" id="height">
+                    </div>
+
+                    <div>
+                        <label for="eye_color">Eye color: </label>
+                        <input type="text" placeholder="ex: blue" id="eye_color">
+                    </div>
+                </div>
+
+                <div id="checkbox">
+                    <p style="font-weight: 600;">Select the movies that this character appeared in:</p>
+
+                    <div>
+                        <input type="checkbox" name="ep1">
+                        <label for="ep1">The Phantom Menace</label>
+                    </div>
+
+                    <div>
+                        <input type="checkbox" name="ep2">
+                        <label for="ep2">Attack of the Clones</label>
+                    </div>
+
+                    <div>
+                        <input type="checkbox" name="ep3">
+                        <label for="ep3">Revenge of the Sith</label>
+                    </div>
+
+                    <div>
+                        <input type="checkbox" name="ep4">
+                        <label for="ep4">A New Hope</label>
+                    </div>
+
+                    <div>
+                        <input type="checkbox" name="ep5">
+                        <label for="ep5">The Empire Strikes Back</label>
+                    </div>
+
+                    <div>
+                        <input type="checkbox" name="ep6">
+                        <label for="ep6">The Return of the Jedi</label>
+                    </div>
+                </div>
+
+            </form>
+
+            <button style="background-color: green; margin-top: 65px;">Create</button>
+
+        `
+    }
 }
 
 function closeInfoCard() {
