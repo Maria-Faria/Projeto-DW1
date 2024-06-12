@@ -61,7 +61,7 @@ header nav ul li > a:hover {
     font-weight: 700;
 }
 
-main {
+#content-site {
     width: 100%;
     height: 100%;
     display: flex;
@@ -70,7 +70,7 @@ main {
     margin: 13% 0 0 0;
 }
 
-main .obi-wan-gif {
+#content-site .obi-wan-gif {
     background: white;
     width: 550px;
     height: 400px;
@@ -78,7 +78,7 @@ main .obi-wan-gif {
     border-radius: 2%;
 }
 
-main .obi-wan-gif > img {
+#content-site .obi-wan-gif > img {
     width: 100%;
     height: 100%;
 }
@@ -162,29 +162,33 @@ nav ul li > a.active {
     display: flex;
     flex-direction: column;
     align-items: end;
-    width: 50%;
-    height: 50%;
+    justify-content: flex-start;
+    width: 100%;
+    min-height: 700px;
+    max-height: 1000px;
     background: white;
     border-radius: 20px;
-    margin: 10% 0 0 0;
+    margin-top: 25px;
     padding: 20px;
 }
 
 .cardInfo {
     width: 100%;
-    height: 90%;
+    height: 300px;
     display: flex;
-    margin-top: 30px;
     justify-content: flex-start;
+    margin-bottom: 50px;
 }
 
 .cardInfo > img {
-    width: 23%;
-    height: 45%;
+    margin: 20px 0 0 10px;
+    width: 200px;
+    height: 250px;
     border-radius: 10px;
 }
 
 .cardInfo > .item-info {
+    margin-top: 20px;
     display: flex;
     flex-direction: column;
 }
@@ -192,16 +196,78 @@ nav ul li > a.active {
 .cardInfo > .item-info > p {
     font-size: 24px;
     font-weight: 600;
-    margin: 15px 0 30px 15px;
+    margin: 15px 0 5px 15px;
+}
+
+.cardInfo > .buttons {
+    margin-left: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+}
+
+.cardInfo > .buttons > button {
+    width: 150px;
+    height: 40px;
+    background: none;
+    cursor: pointer;
+    border: #696969 1px solid;
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 10px;
 }
 
 .item-info > p.infoPerson {
-    font-size: 17px; 
+    font-size: 16px; 
+}
+
+.modal > main .cardMovies {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.modal > main .cardMovies .movie-info {
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.modal > main .cardMovies .movie-info > img {
+    width: 150px;
+    height: 200px;
+    border-radius: 10px;
+    margin-bottom: 10px;
 }
 
 @media (height > 900px) {
     footer {
         height: 145px;
         margin: 10% 0 0 0;
+    }
+}
+
+@media (width <= 1920px) {
+    .cards {
+        padding: 0 0 0 150px;
+        gap: 50px;
+    }
+
+    .card {
+        height: 350px;
+        width: 250px;
+    }
+
+    .modal {
+        height: 190.4%;
+    }
+
+    .modal > main {
+        width: 55%;
+        min-height: 700px;
+        max-height: 1000px;
     }
 }

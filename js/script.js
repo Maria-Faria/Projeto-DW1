@@ -1,6 +1,7 @@
 const people = [];
 const species = [];
 let content = '';
+let moviesContent = '';
 let movies = [];
 
 const pageLoading = () => {
@@ -73,9 +74,13 @@ function openInfoCard(contentList, id) {
     const modal = document.querySelector(".modal");
     modal.style.display = 'flex';
 
-    let cardInfo = document.querySelector(".cardInfo");
+    const cardInfo = document.querySelector(".cardInfo");
+    let cardMovies = document.querySelector(".cardMovies");
+
+    cardMovies.innerHTML = '';
 
     contentList.map(item => {
+        
         if(id === item.id) {
             cardInfo.innerHTML = `
                 <img src = ${item.photo}>
@@ -85,9 +90,14 @@ function openInfoCard(contentList, id) {
 
                     <p class = "infoPerson">Birth Year: ${item.birth_year} <br><br>
                     Hair Color: ${item.hair_color} <br><br>
-                    Height: ${item.height} <br><br>
+                    Height: ${item.height}cm <br><br>
                     Eye Color: ${item.eye_color} <br><br>
-                    </p>        
+                    </p>   
+                </div>
+
+                <div class = "buttons">
+                    <button style="background-color: green;">Save updates</button>
+                    <button style="background-color: red;">Delete card</button>
                 </div>
             `
 
@@ -97,13 +107,14 @@ function openInfoCard(contentList, id) {
             
                 const imgMovie = `img/movies/${moviePerson.episode_id}.jpg`
 
-                console.log(imgMovie)
-
-                cardInfo.innerHTML += `
-                    <img src = ${imgMovie}>
+                cardMovies.innerHTML += `
+                    <div class = "movie-info">
+                        <img src = ${imgMovie}>
+                        <p>${moviePerson.title}</p>
+                    </div>
                 `
-
             })
+
         }
     })
     
