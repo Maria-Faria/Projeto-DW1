@@ -153,7 +153,7 @@ nav ul li > a.active {
     bottom: 0;
     display: none;
     justify-content: center;
-    align-items: start;
+    align-items: center;
     height: 142.1%;
 }
 
@@ -254,19 +254,22 @@ button {
 
 form {
     display: flex;
+    flex-direction: column;
     width: 700px;
     gap: 50px;
+    align-items: center;
 }
 
-#input-text {
+#form-create {
     margin-top: 25px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-self: flex-start;
     gap: 25px;
+
 }
 
-form input[type="text"] {
+input[type="text"] {
     border-radius: 5px;
     border: 1px solid #696969;
     height: 20px;
@@ -274,7 +277,13 @@ form input[type="text"] {
     padding: 2px;
 }
 
-form > div {
+#form-create #input-text {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#form-create #input-text > div {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -287,6 +296,7 @@ form > div {
     justify-content: center;
     margin-top: 15px;
     margin-bottom: 5px;
+    margin-left: 30px;
 }
 
 #checkbox > div {

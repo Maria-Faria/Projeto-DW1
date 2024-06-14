@@ -19,7 +19,7 @@ const addNewCardContent = (contentList) => {
     const divCards = document.querySelector(".cards");
     
     content += `
-        <div class = "card" onclick="openCreateNewCard(${contentList})">
+        <div class = "card" onclick="openCreateNewCard(${contentList})" id="addNewItem">
             <img src="img/add.png" style="width: 100px; height: 100px;">
         </div>
     `
@@ -87,6 +87,7 @@ function openInfoCard(contentList, id) {
     const modal = document.querySelector(".modal");
     modal.style.display = 'flex';
 
+    console.log(contentList)
     modal.innerHTML = `
         <main class="modal-content">
             <img src="img/close.png" style="width: 20px; height: 20px; cursor: pointer;" onclick="closeInfoCard()">
@@ -155,17 +156,20 @@ function openInfoCard(contentList, id) {
             `
 
             item.films.map(async film => {
-                const response = await fetch(film);
-                const movieItem = await response.json();
-            
-                const imgMovie = `img/movies/${movieItem.episode_id}.jpg`
-
-                cardMovies.innerHTML += `                    
-                    <div class = "movie-info">
-                        <img src = ${imgMovie}>
-                        <p>${movieItem.title}</p>
-                    </div>
-                `
+                console.log(film)
+                if(film !== undefined) {
+                    const response = await fetch(film);
+                    const movieItem = await response.json();
+                
+                    const imgMovie = `img/movies/${movieItem.episode_id}.jpg`
+    
+                    cardMovies.innerHTML += `                    
+                        <div class = "movie-info">
+                            <img src = ${imgMovie}>
+                            <p>${movieItem.title}</p>
+                        </div>
+                    `
+                }
             })
 
         }
@@ -197,79 +201,177 @@ function openCreateNewCard(contentList) {
 
     if(isPeople) {
         newCard.innerHTML += `
-            <form>
-                <div id="input-text">
-                    <div>
-                        <label for="name">Name: </label>
-                        <input type="text" placeholder="ex: Han Solo" id="name">
+            <form onsubmit="createCard(event)">
+                <div id="form-create">
+
+                    <div id="input-text">
+                        <div>
+                            <label for="name">Name: </label>
+                            <input type="text" placeholder="ex: Han Solo" id="name" name="name">
+                        </div>
+
+                        <div>
+                            <label for="photo">Photo: </label>
+                            <input type="text" placeholder="type the photo url" id="photo" name="photo">
+                        </div>
+
+                        <div>
+                            <label for="birth_year">Birth Year: </label>
+                            <input type="text" placeholder="ex: 19BBY" id="birth_year" name="birth_year">
+                        </div>
+
+                        <div>
+                            <label for="hair_color">Hair color: </label>
+                            <input type="text" placeholder="ex: black" id="hair_color" name="hair_color">
+                        </div>
+
+                        <div>
+                            <label for="heigth">Heigth: </label>
+                            <input type="text" placeholder="ex: 180" id="height" name="height">
+                        </div>
+
+                        <div>
+                            <label for="eye_color">Eye color: </label>
+                            <input type="text" placeholder="ex: blue" id="eye_color" name="eye_color">
+                        </div>
                     </div>
 
-                    <div>
-                        <label for="photo">Photo: </label>
-                        <input type="text" placeholder="type the photo url" id="photo">
-                    </div>
+                    <div id="checkbox">
+                        <p style="font-weight: 600;">Select the movies that this character appeared in:</p>
 
-                    <div>
-                        <label for="birth_year">Birth Year: </label>
-                        <input type="text" placeholder="ex: 19BBY" id="birth_year">
-                    </div>
+                        <div>
+                            <input type="checkbox" name="ep1" id="ep1" value="https://swapi.dev/api/films/4/">
+                            <label for="ep1">The Phantom Menace</label>
+                        </div>
 
-                    <div>
-                        <label for="hair_color">Hair color: </label>
-                        <input type="text" placeholder="ex: black" id="hair_color">
-                    </div>
+                        <div>
+                            <input type="checkbox" name="ep2" id="ep2" value="https://swapi.dev/api/films/5/">
+                            <label for="ep2">Attack of the Clones</label>
+                        </div>
 
-                    <div>
-                        <label for="heigth">Heigth: </label>
-                        <input type="text" placeholder="ex: 180" id="height">
-                    </div>
+                        <div>
+                            <input type="checkbox" name="ep3" id="ep3" value="https://swapi.dev/api/films/6/">
+                            <label for="ep3">Revenge of the Sith</label>
+                        </div>
 
-                    <div>
-                        <label for="eye_color">Eye color: </label>
-                        <input type="text" placeholder="ex: blue" id="eye_color">
+                        <div>
+                            <input type="checkbox" name="ep4" id="ep4" value="https://swapi.dev/api/films/1/">
+                            <label for="ep4">A New Hope</label>
+                        </div>
+
+                        <div>
+                            <input type="checkbox" name="ep5" id="ep5" value="https://swapi.dev/api/films/2/">
+                            <label for="ep5">The Empire Strikes Back</label>
+                        </div>
+
+                        <div>
+                            <input type="checkbox" name="ep6" id="ep6" value="https://swapi.dev/api/films/3/">
+                            <label for="ep6">The Return of the Jedi</label>
+                        </div>
                     </div>
                 </div>
 
-                <div id="checkbox">
-                    <p style="font-weight: 600;">Select the movies that this character appeared in:</p>
-
-                    <div>
-                        <input type="checkbox" name="ep1">
-                        <label for="ep1">The Phantom Menace</label>
-                    </div>
-
-                    <div>
-                        <input type="checkbox" name="ep2">
-                        <label for="ep2">Attack of the Clones</label>
-                    </div>
-
-                    <div>
-                        <input type="checkbox" name="ep3">
-                        <label for="ep3">Revenge of the Sith</label>
-                    </div>
-
-                    <div>
-                        <input type="checkbox" name="ep4">
-                        <label for="ep4">A New Hope</label>
-                    </div>
-
-                    <div>
-                        <input type="checkbox" name="ep5">
-                        <label for="ep5">The Empire Strikes Back</label>
-                    </div>
-
-                    <div>
-                        <input type="checkbox" name="ep6">
-                        <label for="ep6">The Return of the Jedi</label>
-                    </div>
-                </div>
-
+                <button style="background-color: green; margin-top: 65px;">Create</button>
             </form>
+        `
+    }else {
+        newCard.innerHTML += `
+            <form onsubmit="createCard(event)">
+                <div id="form-create">
+                    <div id="input-text">
+                        <div>
+                            <label for="name">Name of specie: </label>
+                            <input type="text" placeholder="ex: wookie" id="name" name="name">
+                        </div>
 
-            <button style="background-color: green; margin-top: 65px;">Create</button>
+                        <div>
+                            <label for="photo">Photo: </label>
+                            <input type="text" placeholder="type the photo url" id="photo" name="photo">
+                        </div>
 
+                        <div>
+                            <label for="classification">Classification: </label>
+                            <input type="text" placeholder="ex: mammal" id="classification" name="classification">
+                        </div>
+
+                        <div>
+                            <label for="designation">Designation: </label>
+                            <input type="text" placeholder="ex: sentient" id="designation" name="designation">
+                        </div>
+
+                        <div>
+                            <label for="average_height">Average Heigth: </label>
+                            <input type="text" placeholder="ex: 210" id="average_height" name="average_height">
+                        </div>
+
+                        <div>
+                            <label for="eye_colors">Eye colors: </label>
+                            <input type="text" placeholder="ex: blue; brown" id="eye_colors" name="eye_colors">
+                        </div>
+                    </div>
+
+                    <div id="checkbox">
+                        <p style="font-weight: 600;">Select the movies that this character appeared in:</p>
+
+                        <div>
+                            <input type="checkbox" name="ep1" id="ep1" value="https://swapi.dev/api/films/4/">
+                            <label for="ep1">The Phantom Menace</label>
+                        </div>
+
+                        <div>
+                            <input type="checkbox" name="ep2" id="ep2" value="https://swapi.dev/api/films/5/">
+                            <label for="ep2">Attack of the Clones</label>
+                        </div>
+
+                        <div>
+                            <input type="checkbox" name="ep3" id="ep3" value="https://swapi.dev/api/films/6/">
+                            <label for="ep3">Revenge of the Sith</label>
+                        </div>
+
+                        <div>
+                            <input type="checkbox" name="ep4" id="ep4" value="https://swapi.dev/api/films/1/">
+                            <label for="ep4">A New Hope</label>
+                        </div>
+
+                        <div>
+                            <input type="checkbox" name="ep5" id="ep5" value="https://swapi.dev/api/films/2/">
+                            <label for="ep5">The Empire Strikes Back</label>
+                        </div>
+
+                        <div>
+                            <input type="checkbox" name="ep6" id="ep6" value="https://swapi.dev/api/films/3/">
+                            <label for="ep6">The Return of the Jedi</label>
+                        </div>
+                    </div>
+                </div>
+
+                <button style="background-color: green; margin-top: 65px;">Create</button>
+            </form>
         `
     }
+}
+
+function createCard(event) {
+    event.preventDefault();
+
+    const formData = new FormData(event.target);
+    const item = Object.fromEntries(formData);
+
+    console.log(item);
+    const contentList = item.birth_year === undefined ? 'species' : 'people';
+    const addItemButton = document.getElementById("addNewItem");
+
+    addItemButton.remove();
+    content = document.querySelector(".cards").innerHTML;
+
+    addCard(item, contentList);
+    addNewCardContent(contentList);
+
+    item.films = [];
+    item.films.push(item.ep1, item.ep2, item.ep3, item.ep4, item.ep5, item.ep6);
+
+    contentList === 'species' ? species.push(item) : people.push(item);
+    closeInfoCard();
 }
 
 function closeInfoCard() {
