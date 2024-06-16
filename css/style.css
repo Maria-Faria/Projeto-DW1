@@ -154,7 +154,7 @@ nav ul li > a.active {
     display: none;
     justify-content: center;
     align-items: center;
-    height: 142.1%;
+    height: 143.1%;
 }
 
 .modal > main {
@@ -384,6 +384,6 @@ input[type="text"] {
     .modal > main {
         width: 55%;
         min-height: 700px;
-        max-height: 1000px;
+        max-height: 1700px;
     }
 }

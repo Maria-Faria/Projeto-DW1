@@ -106,7 +106,7 @@ function openInfoCard(peopleList, id) {
 
             <h2 style="align-self: center; margin-bottom: 25px;">Movies</h2>
                 
-            <div class="cardMovies">
+            <div class="cardMovies" id=cardMovies${id}>
 
             </div>
 
@@ -120,7 +120,6 @@ function openInfoCard(peopleList, id) {
     const cardInfo = document.querySelector(".cardInfo");
     let cardMovies = document.querySelector(".cardMovies");
 
-    //cardMovies.innerHTML = '';
     cardMovies.innerHTML = '';
 
     contentList.map(item => {        
@@ -145,7 +144,7 @@ function openInfoCard(peopleList, id) {
                     </div>
 
                     <div class = "buttons">
-                        <button style="background-color: green;" onclick="openAddMovieModal()">Add movie</button>
+                        <button style="background-color: green;" onclick="openAddMovieModal(${item.id}, ${peopleList})">Add movie</button>
                         <button style="background-color: red;">Delete card</button>
                     </div>
                 `
@@ -169,7 +168,7 @@ function openInfoCard(peopleList, id) {
                 </div>
 
                 <div class = "buttons" style = "align-self: center;">
-                    <button style="background-color: green;">Save updates</button>
+                    <button style="background-color: green;" onclick="openAddMovieModal(${item.id}, ${peopleList})">Add movie</button>
                     <button style="background-color: red;">Delete card</button>
                 </div>
             `
@@ -188,7 +187,21 @@ function openInfoCard(peopleList, id) {
                         </div>
                     `
                 }
-            })
+            });
+
+            if(item.newMovies !== undefined) {
+                console.log(item.newMovies);
+
+                item.newMovies.forEach((movie) => {
+                    console.log(movie);
+                    cardMovies.innerHTML += `                    
+                        <div class = "movie-info">
+                            <img src = ${movie.imgMovie}>
+                            <p>${movie.titleMovie}</p>
+                        </div>
+                    `
+                })
+            }
         }
     })
     
@@ -429,6 +442,8 @@ function editImage(event, id, peopleList) {
 
     const cardSelected = document.getElementById(`card${id}`).querySelector('img');
     cardSelected.src = newImg.newImg;
+
+    closeModalImage();
 }
 
 function closeModalImage() {
@@ -436,13 +451,13 @@ function closeModalImage() {
     modal.style.display = 'none';
 }
 
-function openAddMovieModal() {
+function openAddMovieModal(idItem, peopleList) {
     const modal = document.querySelector(".modal-image");
 
     modal.innerHTML = `
         <img src="img/close.png" style="width: 15px; height: 15px; cursor: pointer;" onclick="closeModalImage()">
 
-        <form onsubmit="addMovie(event)" style="align-items: flex-start;">
+        <form onsubmit="addMovie(event, ${idItem}, ${peopleList})" style="align-items: flex-start;">
             <label for="titleMovie">Insert the title of the movie: </label>
             <input type="text" placeholder="Ex: The Force Awakens" id="titleMovie" name="titleMovie">
 
@@ -456,6 +471,32 @@ function openAddMovieModal() {
     modal.style.display = 'flex';
 }
 
+function addMovie(event, idItem, peopleList) {
+    event.preventDefault();
+
+    const contentList = peopleList ? people : species;
+
+    const formData = new FormData(event.target);
+    const newMovie = Object.fromEntries(formData);
+
+    const cardMovies = document.getElementById(`cardMovies${idItem}`);
+    cardMovies.innerHTML += `
+    <div class = "movie-info">
+        <img src = ${newMovie.imgMovie}>
+        <p>${newMovie.titleMovie}</p>
+    </div>
+    `
+
+    contentList.map((item) => {
+        if(item.id == idItem) {
+            item.newMovies === undefined ? 
+            item.newMovies = [{'titleMovie': newMovie.titleMovie, 'imgMovie': newMovie.imgMovie}] : 
+            item.newMovies.push({'titleMovie': newMovie.titleMovie, 'imgMovie': newMovie.imgMovie});
+        }
+    });
+
+    closeModalImage();
+}
 function closeInfoCard() {
     const modal = document.querySelector(".modal");
 
