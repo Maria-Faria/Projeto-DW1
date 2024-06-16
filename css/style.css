@@ -153,8 +153,8 @@ nav ul li > a.active {
     bottom: 0;
     display: none;
     justify-content: center;
-    align-items: center;
-    height: 143.1%;
+    align-items: start;
+    height: 142.1%;
 }
 
 .modal > main {
@@ -169,6 +169,7 @@ nav ul li > a.active {
     border-radius: 20px;
     margin-top: 25px;
     padding: 20px;
+    margin-top: 15%;
 }
 
 .modal-image {
