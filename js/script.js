@@ -26,6 +26,10 @@ const addNewCardContent = (contentList) => {
     divCards.innerHTML = content;
 }
 
+const isPeople = (item) => {
+    return item.birth_year !== undefined ? true : false;
+}
+
 async function loadCardsPeople() {
     pageLoading();
 
@@ -68,26 +72,30 @@ async function loadCardsSpecies() {
         })
     }
 
-    species.map((specie) => addCard(specie, 'species'));
+    species.map((specie) => addCard(specie));
     addNewCardContent('species');
 }
 
-async function addCard(item, contentList) {
+async function addCard(item) {
     const {id, name, photo} = item;
+    let peopleList;
+
+    isPeople(item) ? peopleList = true : peopleList = false;
 
     content += `
-        <div class = "card" onclick="openInfoCard(${contentList}, ${id})">
+        <div class = "card" id = card${id} onclick="openInfoCard(${peopleList}, ${id})">
             <img src= ${photo}>
             <p>${name}</p>
         </div>
     `
 }
 
-function openInfoCard(contentList, id) {
+function openInfoCard(peopleList, id) {
+    const contentList = peopleList ? people : species;
+
     const modal = document.querySelector(".modal");
     modal.style.display = 'flex';
 
-    console.log(contentList)
     modal.innerHTML = `
         <main class="modal-content">
             <img src="img/close.png" style="width: 20px; height: 20px; cursor: pointer;" onclick="closeInfoCard()">
@@ -101,6 +109,10 @@ function openInfoCard(contentList, id) {
             <div class="cardMovies">
 
             </div>
+
+            <div class="modal-image">
+
+            </div>
                     
         </main>
     `
@@ -108,15 +120,19 @@ function openInfoCard(contentList, id) {
     const cardInfo = document.querySelector(".cardInfo");
     let cardMovies = document.querySelector(".cardMovies");
 
+    //cardMovies.innerHTML = '';
     cardMovies.innerHTML = '';
 
-    contentList.map(item => {
-        console.log(item)
-        
+    contentList.map(item => {        
         if(id === item.id) {
-            item.birth_year !== undefined ?
+            peopleList ?
                 cardInfo.innerHTML = `
-                    <img src = ${item.photo}>
+
+                    <div class = "editItem" id = ${item.id}>
+                        <img src = ${item.photo} class = "imgCard">
+
+                        <img src="img/edit.png" style="width: 20px; height: 20px; cursor: pointer" onclick="openEditImage(${item.id}, ${peopleList})">
+                    </div>
 
                     <div class = "item-info">
                         <p>${item.name}</p> 
@@ -129,15 +145,18 @@ function openInfoCard(contentList, id) {
                     </div>
 
                     <div class = "buttons">
-                        <button style="background-color: green;">Save updates</button>
+                        <button style="background-color: green;" onclick="openAddMovieModal()">Add movie</button>
                         <button style="background-color: red;">Delete card</button>
                     </div>
                 `
-
             :
 
             cardInfo.innerHTML = `
-                <img src = ${item.photo}>
+                <div class = "editItem" id = ${item.id}>
+                    <img src = ${item.photo} class = "imgCard">
+
+                    <img src="img/edit.png" style="width: 20px; height: 20px; cursor: pointer" onclick="openEditImage(${item.id}, ${peopleList})">
+                </div>
 
                 <div class = "item-info">
                     <p>${item.name}</p> 
@@ -155,8 +174,7 @@ function openInfoCard(contentList, id) {
                 </div>
             `
 
-            item.films.map(async film => {
-                console.log(film)
+            item.films.forEach(async film => {
                 if(film !== undefined) {
                     const response = await fetch(film);
                     const movieItem = await response.json();
@@ -171,7 +189,6 @@ function openInfoCard(contentList, id) {
                     `
                 }
             })
-
         }
     })
     
@@ -356,22 +373,87 @@ function createCard(event) {
 
     const formData = new FormData(event.target);
     const item = Object.fromEntries(formData);
-
-    console.log(item);
-    const contentList = item.birth_year === undefined ? 'species' : 'people';
     const addItemButton = document.getElementById("addNewItem");
+
+    let contentList;
+
+    isPeople(item) ? contentList = people : contentList = species;
 
     addItemButton.remove();
     content = document.querySelector(".cards").innerHTML;
 
-    addCard(item, contentList);
-    addNewCardContent(contentList);
-
     item.films = [];
     item.films.push(item.ep1, item.ep2, item.ep3, item.ep4, item.ep5, item.ep6);
+    item.id = contentList.length + 1;
 
-    contentList === 'species' ? species.push(item) : people.push(item);
+    contentList.push(item);
+
+    addCard(item);
+    addNewCardContent(contentList);
+
     closeInfoCard();
+}
+
+function openEditImage(idItem, peopleList) {
+    const modal = document.querySelector(".modal-image");
+    
+    modal.innerHTML = `
+        <img src="img/close.png" style="width: 15px; height: 15px; cursor: pointer;" onclick="closeModalImage()">
+
+        <form onsubmit="editImage(event, ${idItem}, ${peopleList})">
+            <label for="newImg">Insert new image: </label>
+            <input type="text" placeholder="type the url of the new image" id="newImg" name="newImg">
+
+            <button type="submit" style="background: green; margin-top: 45px">Save</button>
+        </form>
+    `;
+
+    modal.style.display = 'flex';
+}
+
+function editImage(event, id, peopleList) {
+    event.preventDefault();
+
+    const contentList = peopleList ? people : species;
+    const formData = new FormData(event.target);
+    const newImg = Object.fromEntries(formData);
+
+    const imgCard = document.getElementById(`${id}`).querySelector('.imgCard');
+    imgCard.src = newImg.newImg;
+
+    contentList.map((item) => {
+        if(item.id === id) {
+            item.photo = newImg.newImg
+        }
+    });
+
+    const cardSelected = document.getElementById(`card${id}`).querySelector('img');
+    cardSelected.src = newImg.newImg;
+}
+
+function closeModalImage() {
+    const modal = document.querySelector(".modal-image");
+    modal.style.display = 'none';
+}
+
+function openAddMovieModal() {
+    const modal = document.querySelector(".modal-image");
+
+    modal.innerHTML = `
+        <img src="img/close.png" style="width: 15px; height: 15px; cursor: pointer;" onclick="closeModalImage()">
+
+        <form onsubmit="addMovie(event)" style="align-items: flex-start;">
+            <label for="titleMovie">Insert the title of the movie: </label>
+            <input type="text" placeholder="Ex: The Force Awakens" id="titleMovie" name="titleMovie">
+
+            <label for="imgMovie" style="margin-top: 5px;">Insert the image of the movie: </label>
+            <input type="text" placeholder="type the url of the image of the movie" id="imgMovie" name="imgMovie">
+
+            <button type="submit" style="background: green; margin-top: 10px; align-self: center">Save</button>
+        </form>
+    `
+
+    modal.style.display = 'flex';
 }
 
 function closeInfoCard() {
