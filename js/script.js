@@ -145,7 +145,7 @@ function openInfoCard(peopleList, id) {
 
                     <div class = "buttons">
                         <button style="background-color: green;" onclick="openAddMovieModal(${item.id}, ${peopleList})">Add movie</button>
-                        <button style="background-color: red;">Delete card</button>
+                        <button style="background-color: red;" onclick="deleteCard(${item.id})">Delete card</button>
                     </div>
                 `
             :
@@ -169,7 +169,7 @@ function openInfoCard(peopleList, id) {
 
                 <div class = "buttons" style = "align-self: center;">
                     <button style="background-color: green;" onclick="openAddMovieModal(${item.id}, ${peopleList})">Add movie</button>
-                    <button style="background-color: red;">Delete card</button>
+                    <button style="background-color: red;" onclick="deleteCard(${item.id})">Delete card</button>
                 </div>
             `
 
@@ -496,6 +496,15 @@ function addMovie(event, idItem, peopleList) {
     });
 
     closeModalImage();
+}
+
+function deleteCard(id) {
+    const card = document.getElementById(`card${id}`);
+    card.remove();
+
+    const modal = document.querySelector(".modal");
+    modal.style.display = 'none';
+
 }
 function closeInfoCard() {
     const modal = document.querySelector(".modal");
