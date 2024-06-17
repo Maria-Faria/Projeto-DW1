@@ -15,11 +15,11 @@ const pageLoading = () => {
     `;
 }
 
-const addNewCardContent = (contentList) => {
+const addNewCardContent = (peopleList) => {
     const divCards = document.querySelector(".cards");
     
     content += `
-        <div class = "card" onclick="openCreateNewCard(${contentList})" id="addNewItem">
+        <div class = "card" onclick="openCreateNewCard(${peopleList})" id="addNewItem">
             <img src="img/add.png" style="width: 100px; height: 100px;">
         </div>
     `
@@ -49,8 +49,8 @@ async function loadCardsPeople() {
         });
     }
 
-    people.map((person) => addCard(person, 'people'));
-    addNewCardContent('people');
+    people.map((person) => addCard(person));
+    addNewCardContent(true);
 }
 
 async function loadCardsSpecies() {
@@ -73,7 +73,7 @@ async function loadCardsSpecies() {
     }
 
     species.map((specie) => addCard(specie));
-    addNewCardContent('species');
+    addNewCardContent(false);
 }
 
 async function addCard(item) {
@@ -190,10 +190,8 @@ function openInfoCard(peopleList, id) {
             });
 
             if(item.newMovies !== undefined) {
-                console.log(item.newMovies);
 
                 item.newMovies.forEach((movie) => {
-                    console.log(movie);
                     cardMovies.innerHTML += `                    
                         <div class = "movie-info">
                             <img src = ${movie.imgMovie}>
@@ -207,13 +205,7 @@ function openInfoCard(peopleList, id) {
     
 }
 
-function openCreateNewCard(contentList) {
-    let isPeople = false;
-
-    contentList.map((item) => {
-        item.birth_year !== undefined ? isPeople = true : isPeople = false;
-    })
-
+function openCreateNewCard(peopleList) {
     const modal = document.querySelector(".modal");
     modal.style.display = 'flex';
 
@@ -229,7 +221,7 @@ function openCreateNewCard(contentList) {
 
     const newCard = document.querySelector(".newCard");
 
-    if(isPeople) {
+    if(peopleList) {
         newCard.innerHTML += `
             <form onsubmit="createCard(event)">
                 <div id="form-create">
@@ -402,7 +394,7 @@ function createCard(event) {
     contentList.push(item);
 
     addCard(item);
-    addNewCardContent(contentList);
+    addNewCardContent(isPeople(item));
 
     closeInfoCard();
 }
