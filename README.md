@@ -26,5 +26,9 @@ O projeto consiste no desenvolvimento de uma aplicação web que realize duas re
 
 ##
 
+`Deletar um card`: cada card possui o botão em vermelho "Delete card", caso o usuário pressione esse botão, o card correspondente será excluído e deixará de ser exibido na tela.
+
+<img src="https://github.com/Maria-Faria/Projeto-DW1/assets/114308727/d13f3b64-4f65-4a71-a349-4b2dba192200" style="width:500px">
+
 ## 💻 Onde acessar o projeto
 Link: https://maria-faria.github.io/Projeto-DW1/
