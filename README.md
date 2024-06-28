@@ -19,5 +19,12 @@ O projeto consiste no desenvolvimento de uma aplicação web que realize duas re
 
 ##
 
+`Atualizar informações de um card`: em cada card, o usuário tem a opção de editar a imagem apresentada, ao clicar no botão simbolizado por um ✏️ e inserir o link para a imagem nova, além disso, també possível inserir um novo filme para ser exibido no card, ao inserir o nome do filme e o link para a imagem correspondente;
+
+<img src="https://github.com/Maria-Faria/Projeto-DW1/assets/114308727/7f55549c-aca7-4015-bcb9-8c45ee9ffae0" style="width: 500px">
+<img src="https://github.com/Maria-Faria/Projeto-DW1/assets/114308727/e0ad92bf-cdfc-4f92-b3b2-55ff21cda09f" style="width:500px">
+
+##
+
 ## 💻 Onde acessar o projeto
 Link: https://maria-faria.github.io/Projeto-DW1/
